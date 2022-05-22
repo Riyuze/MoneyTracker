@@ -1,1 +1,1 @@
-web: waitress-serve --port:$PORT MoneyTracker.wsgi:application
+web: gunicorn MoneyTracker.wsgi:application
