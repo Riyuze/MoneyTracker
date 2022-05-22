@@ -1,1 +1,1 @@
-web: waitress-serve --listen=*:8000 MoneyTracker.wsgi:application
+web: waitress-serve --port:$PORT MoneyTracker.wsgi:application
