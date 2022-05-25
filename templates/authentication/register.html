@@ -13,7 +13,11 @@
                     <h4>Register Account</h4>
                 </div>
 
-                <form action="" method="POST">
+                <form action="{% url 'register' %}" method="POST">
+
+                    {% csrf_token %}
+
+                    {% include 'partials/messages.html' %}
 
                     <div class="form-group mb-2">
                         <input type="text" name="username" id="usernameField" class="form-control form-control-sm" placeholder="Username">
