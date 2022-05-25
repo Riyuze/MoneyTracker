@@ -20,7 +20,7 @@
                     {% include 'partials/messages.html' %}
 
                     <div class="form-group mb-2">
-                        <input type="text" name="username" id="usernameField" class="form-control form-control-sm" placeholder="Username">
+                        <input type="text" name="username" id="usernameField" class="form-control form-control-sm" placeholder="Username" value="{{ fieldValues.username }}">
                     </div>
 
                     <div class="username-invalid-feedback invalid-feedback" style="display:none"> </div>
@@ -28,7 +28,7 @@
                     <div class="usernameSuccessOutput valid-feedback mb-2"> </div>
 
                     <div class="form-group mb-2">
-                        <input type="email" name="email" id="emailField" class="form-control form-control-sm" placeholder="Email">
+                        <input type="email" name="email" id="emailField" class="form-control form-control-sm" placeholder="Email" value="{{ fieldValues.email }}">
                     </div>
 
                     <div class="email-invalid-feedback invalid-feedback" style="display:none"></div>
@@ -45,7 +45,7 @@
                     </div>
 
                     <div class="d-grid gap-2">
-                        <input type="submit" value="Register" class="btn btn-primary">
+                        <input type="submit" value="Register" class="btn btn-primary submit-btn" disabled="disabled">
                     </div>
 
                 </form>
