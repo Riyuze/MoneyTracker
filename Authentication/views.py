@@ -4,7 +4,7 @@ import json
 from django.http import JsonResponse
 from django.contrib.auth.models import User
 from validate_email import validate_email
-from django.contrib import messages
+from django.contrib import messages, auth
 from django.core.mail import EmailMessage
 
 from django.utils.encoding import force_bytes, force_str, DjangoUnicodeDecodeError
@@ -90,9 +90,9 @@ class VerificationView(View):
     def get(self, request, uidb64, token):
         try:
             id = force_str(urlsafe_base64_decode(uidb64))
-            user = User.objects.get(pk = id)
+            user = User.objects.get(pk=id)
 
-            if not token_generator(user, token):
+            if not token_generator.check_token(user, token):
                 return redirect('login' + '?message=' + 'Account already activated')
 
             if user.is_active:
@@ -111,3 +111,31 @@ class VerificationView(View):
 class LoginView(View):
     def get(self, request):
         return render(request, 'authentication/login.html')
+
+    def post(self, request):
+        username = request.POST['username']
+        password = request.POST['password']
+
+        if username and password:
+            user = auth.authenticate(username=username, password=password)
+            
+            if user:
+                if user.is_active:
+                    auth.login(request, user)
+                    messages.success(request, "Welcome, " + user.username + " you are now logged in")
+                    return redirect('expenses')
+            
+                messages.warning(request, "Account is not activated yet, please check your email")
+                return render(request, 'authentication/login.html')
+
+            messages.error(request, "Invalid credentials, please try again")
+            return render(request, 'authentication/login.html')
+        
+        messages.error(request, "Please fill all fields")
+        return render(request, 'authentication/login.html')
+
+class LogoutView(View):
+    def post(self, request):
+        auth.logout(request)
+        messages.success(request, "You have been logged out")
+        return redirect('login')
