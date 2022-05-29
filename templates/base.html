@@ -27,8 +27,11 @@
     <div class="nav-item text-nowrap">
 
       <form action="{% url 'logout' %}" method="POST">
+
         {% csrf_token %}
-        <input type="submit" value="Sign Out">
+
+        <input class="btn" type="submit" value="Sign Out">
+
       </form>
 
     </div>
