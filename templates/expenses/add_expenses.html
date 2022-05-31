@@ -1,6 +1,10 @@
 {% extends 'base.html' %}
 
+{% block content %}
+
 <div class="container mt-4">
+
+    <h5>Add Expenses</h5>
 
     <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
         <ol class="breadcrumb">
@@ -9,15 +13,40 @@
         </ol>
     </nav>
 
+    <div class="card">
+        <div class="card-body">
 
-    <form action="{% url 'expenses' %}" method="POST">
-        
-    </form>
+            <form action="{% url 'expenses' %}" method="POST">
+
+                <div class="form-group">
+                    <label for="">Amount</label>
+                    <input type="number" class="form-control-sm" name="amount">
+                </div>
+
+                <div class="form-group">
+                    <label for="">Description</label>
+                    <input type="text" class="form-control-sm" name="description">
+                </div>
+
+                <div class="form-group">
+                    <label for="">Category</label>
+                    <select name="category">
+                        <option>Test</option>
+                    </select>    
+                </div>
+
+                <div class="form-group">
+                    <label for="">Date of Expense</label>
+                    <input type="date" class="form-control-sm" name="expense_date">
+                </div>
+
+                <input type="submit" value="Submit" class="btn btn-primary-sm"
+
+            </form>
+
+        </div>
+    </div>
 
 </div>
-
-{% block content %}
-
-<h1>Add Expenses</h1>
 
 {% endblock content %}
