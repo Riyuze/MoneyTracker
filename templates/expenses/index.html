@@ -37,6 +37,7 @@
                         <th>Description</th>
                         <th>Category</th>
                         <th>Date</th>
+                        <th></th>
                     </tr>
                 </thead>
 
@@ -48,6 +49,8 @@
                         <td>{{expense.description}}</td>
                         <td>{{expense.category}}</td>
                         <td>{{expense.date}}</td>
+
+                        <td><a href="{% url 'edit-expenses' expense.id %}" class="btn btn-secondary btn-sm">Edit</a></td>
                     </tr>
                     {% endfor %}
 
@@ -57,4 +60,3 @@
         {% endif %}
 
 {% endblock content %}
-
