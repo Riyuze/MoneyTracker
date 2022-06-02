@@ -45,7 +45,7 @@
             <table class="table table-striped table-hover">
                 <thead>
                     <tr>
-                        <th>Amount (CURRENCY)</th>
+                        <th>Amount ({{currency}})</th>
                         <th>Description</th>
                         <th>Category</th>
                         <th>Date</th>
@@ -70,11 +70,12 @@
             </table>
         </div>
 
+        <p class="no-results" style="display: none;">No results found</p>
             <div class="table-output">
                 <table class="table table-striped table-hover">
                     <thead>
                         <tr>
-                            <th>Amount (CURRENCY)</th>
+                            <th>Amount ({{currency}})</th>
                             <th>Description</th>
                             <th>Category</th>
                             <th>Date</th>
@@ -82,9 +83,10 @@
                         </tr>
                     </thead>
     
-                    <tbody>
+                    <tbody class="table-body">
     
                     </tbody>
+
                 </table>
             </div>
 
