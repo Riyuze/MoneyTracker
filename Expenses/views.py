@@ -26,14 +26,14 @@ def search_expenses(request):
 @login_required(login_url='authentication/login')
 
 def index(request):
-    expenses = Expense.objects.filter(user=request.user)
-    paginator = Paginator(expenses, 5)
+    expense = Expense.objects.filter(user=request.user)
+    paginator = Paginator(expense, 5)
     page_number = request.GET.get('page')
     page_obj = Paginator.get_page(paginator, page_number)
     currency = UserPreferences.objects.get(user=request.user).currency
 
     context = {
-        'expenses': expenses,
+        'expenses': expense,
         'page_obj': page_obj,
         'currency': currency,
     }
