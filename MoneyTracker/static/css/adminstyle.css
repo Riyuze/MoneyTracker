@@ -1,0 +1,29 @@
+#header {
+    background: #1d355765;
+    color: #FFFFFF;
+}
+
+#branding h1 {
+    color: #FFFFFF;
+}
+
+div.breadcrumbs {
+    background: #457b9dd4;
+    color: #FFFFFF;
+
+}
+
+.submit-row input {
+    width: 100%;
+    background: #1d355765;
+}
+
+img {
+    padding-bottom: 5px;
+}
+
+.module h2,
+.module caption,
+.inline-group h2 {
+    background: #1d355765;
+}
