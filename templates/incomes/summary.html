@@ -1,10 +1,9 @@
 {% extends 'base.html' %}
-
+{% block title %} | Income Summary {% endblock %}
 {% load static %}
-
 {% block content %}
-
 {% load humanize %}
+<!-- Alerts -->
 
 <section id="dashboard" class="py-4">
   <div class="container">
@@ -13,7 +12,7 @@
 
 <nav aria-label="breadcrumb">
   <ol class="breadcrumb">
-    <li class="breadcrumb-item"><a href="{% url 'expenses' %}">All Expenses</a></li>
+    <li class="breadcrumb-item"><a href="{% url 'incomes' %}">All Income</a></li>
     <li class="breadcrumb-item active" aria-current="page">Summary</li>
   </ol>
 </nav>
@@ -25,7 +24,7 @@
   <div class="card-header">TODAY <h5 class="float-right"><span class="badge  badge-light ">{{today.count}}</span></h5> </div>
   <div class="card-body">
     <i class="fa fa-money-bill-alt"></i>
-    <p class="card-text">{{today.amount}} {{currency}}</p>  </div>
+    <p class="card-text">{{today.amount}} {{currency}}</p> </div>
 </div>
 </div>
 <div class="col-md-3">
@@ -63,6 +62,7 @@
 <div class="spinner-grow text-primary" role="status">
   <span class="visually-hidden">Loading...</span>
 </div>
+
 <div class="spinner-grow text-secondary" role="status">
   <span class="visually-hidden">Loading...</span>
 </div>
@@ -87,7 +87,9 @@
 </div>
 
 <canvas id="myChart"></canvas>
-</div><div class="col-md-6">
+</div>
+
+<div class="col-md-6">
 <canvas id="myChartOne"></canvas>
 </div>
 
@@ -98,9 +100,9 @@
   </div>
   </div>
 </section>
-<script src={% static 'js/expensesCharts.js' %}>
+<script src={% static 'js/incomesCharts.js' %}>
 
 
 </script>
 
-{% endblock %}
+{%endblock%}
