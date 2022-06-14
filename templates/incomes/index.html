@@ -32,7 +32,11 @@
         {% if incomes.count %}
 
         <div class="row">
-            <div class="col-md-8"></div>
+            <div class="col-md-8">
+
+                <a href="{% url 'export-csv' %}" class="btn btn-secondary">Export to CSV</a>
+                
+            </div>
 
             <div class="col-md-4">
                 <input type="text" class="form-control mb-3" id="searchField" placeholder="Search">
@@ -140,7 +144,7 @@
                 </div>
             </div>
 
-            {% include 'partials/main_incomes_charts.html' %}
+            {% include 'partials/main_incomes_charts.html' %} 
            
         {% endif %}
 

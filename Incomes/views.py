@@ -1,4 +1,4 @@
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponse
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from .models import Source, Income
@@ -7,6 +7,7 @@ from django.core.paginator import Paginator
 import json
 from UserPreferences.models import UserPreferences
 import datetime
+import csv
 
 # Create your views here.
 
@@ -326,3 +327,17 @@ def last_3months_income_source_stats(request):
 
     keyed_data.append({str(last_3_month): prev_month_data})
     return JsonResponse({'cumulative_income_data': keyed_data}, safe=False)
+
+def export_csv(request):
+    response = HttpResponse(content_type='text/csv')
+    response['Content-Disposition'] =  'attachment; filename = Incomes ' + str(datetime.datetime.now()) + '.csv'
+
+    writer = csv.writer(response)
+    writer.writerow(['Amount', 'Description', 'Source', 'Date'])
+
+    expenses = Income.objects.filter(user = request.user)
+
+    for expense in expenses:
+        writer.writerow([expense.amount, expense.description, expense.source, expense.date])
+
+    return response
