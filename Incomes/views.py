@@ -341,3 +341,4 @@ def export_csv(request):
         writer.writerow([expense.amount, expense.description, expense.source, expense.date])
 
     return response
+
