@@ -9,6 +9,10 @@ from UserPreferences.models import UserPreferences
 import datetime
 import csv
 import xlwt
+from django.template.loader import render_to_string
+from weasyprint import HTML
+import tempfile
+from django.db.models import Sum
 
 # Create your views here.
 
@@ -336,10 +340,10 @@ def export_csv_incomes(request):
     writer = csv.writer(response)
     writer.writerow(['Amount', 'Description', 'Source', 'Date'])
 
-    expenses = Income.objects.filter(user = request.user)
+    incomes = Income.objects.filter(user = request.user)
 
-    for expense in expenses:
-        writer.writerow([expense.amount, expense.description, expense.source, expense.date])
+    for income in incomes:
+        writer.writerow([income.amount, income.description, income.source, income.date])
 
     return response
 
@@ -372,3 +376,26 @@ def export_excel_incomes(request):
 
     return response
 
+def export_pdf_incomes(request):
+    response = HttpResponse(content_type='application/pdf')
+    response['Content-Disposition'] =  'inline; attachment; filename = Incomes ' + str(datetime.datetime.now()) + '.pdf'
+    response['Content-Transfer-Encoding'] = 'binary'
+
+    incomes = Income.objects.filter(user = request.user)
+
+    total = incomes.aggregate(Sum('amount'))
+
+    html_string = render_to_string('incomes/pdf_output.html', {'incomes': incomes, 'total': total['amount__sum']})
+    html = HTML(string = html_string)
+
+    result = html.write_pdf()
+
+    with tempfile.NamedTemporaryFile(delete=True) as output:
+        output.write(result)
+        output.flush()
+        
+        output.seek(0)
+
+        response.write(output.read())
+
+    return response
