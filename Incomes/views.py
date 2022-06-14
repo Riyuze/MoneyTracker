@@ -8,6 +8,7 @@ import json
 from UserPreferences.models import UserPreferences
 import datetime
 import csv
+import xlwt
 
 # Create your views here.
 
@@ -328,7 +329,7 @@ def last_3months_income_source_stats(request):
     keyed_data.append({str(last_3_month): prev_month_data})
     return JsonResponse({'cumulative_income_data': keyed_data}, safe=False)
 
-def export_csv(request):
+def export_csv_incomes(request):
     response = HttpResponse(content_type='text/csv')
     response['Content-Disposition'] =  'attachment; filename = Incomes ' + str(datetime.datetime.now()) + '.csv'
 
@@ -339,6 +340,35 @@ def export_csv(request):
 
     for expense in expenses:
         writer.writerow([expense.amount, expense.description, expense.source, expense.date])
+
+    return response
+
+def export_excel_incomes(request):
+    response = HttpResponse(content_type='application/ms-excel')
+    response['Content-Disposition'] =  'attachment; filename = Incomes ' + str(datetime.datetime.now()) + '.xls'
+
+    workbook = xlwt.Workbook(encoding='utf-8')
+    workbook_sheet = workbook.add_sheet('Incomes')
+    row_num = 0
+    font_style = xlwt.XFStyle()
+    font_style.font.bold = True
+
+    columns = ['Amount', 'Description', 'Source', 'Date']
+
+    for col_num in range(len(columns)):
+        workbook_sheet.write(row_num, col_num, columns[col_num], font_style)
+
+    font_style = xlwt.XFStyle()
+
+    rows = Income.objects.filter(user = request.user).values_list('amount', 'description', 'source', 'date')
+
+    for row in rows:
+        row_num += 1
+
+        for col_num in range(len(row)):
+            workbook_sheet.write(row_num, col_num, str(row[col_num]), font_style)
+
+    workbook.save(response)
 
     return response
 

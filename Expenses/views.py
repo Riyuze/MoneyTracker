@@ -8,6 +8,7 @@ import json
 from UserPreferences.models import UserPreferences
 import datetime
 import csv
+import xlwt
 
 
 # Create your views here.
@@ -338,7 +339,7 @@ def last_3months_expense_source_stats(request):
     keyed_data.append({str(last_3_month): prev_month_data})
     return JsonResponse({'cumulative_income_data': keyed_data}, safe=False)
 
-def export_csv(request):
+def export_csv_expenses(request):
     response = HttpResponse(content_type='text/csv')
     response['Content-Disposition'] =  'attachment; filename = Expenses ' + str(datetime.datetime.now()) + '.csv'
 
@@ -351,3 +352,33 @@ def export_csv(request):
         writer.writerow([expense.amount, expense.description, expense.category, expense.date])
 
     return response
+
+def export_excel_expenses(request):
+    response = HttpResponse(content_type='application/ms-excel')
+    response['Content-Disposition'] =  'attachment; filename = Expenses ' + str(datetime.datetime.now()) + '.xls'
+
+    workbook = xlwt.Workbook(encoding='utf-8')
+    workbook_sheet = workbook.add_sheet('Expenses')
+    row_num = 0
+    font_style = xlwt.XFStyle()
+    font_style.font.bold = True
+
+    columns = ['Amount', 'Description', 'Category', 'Date']
+
+    for col_num in range(len(columns)):
+        workbook_sheet.write(row_num, col_num, columns[col_num], font_style)
+
+    font_style = xlwt.XFStyle()
+
+    rows = Expense.objects.filter(user = request.user).values_list('amount', 'description', 'category', 'date')
+
+    for row in rows:
+        row_num += 1
+
+        for col_num in range(len(row)):
+            workbook_sheet.write(row_num, col_num, str(row[col_num]), font_style)
+
+    workbook.save(response)
+
+    return response
+
