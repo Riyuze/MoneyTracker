@@ -33,6 +33,11 @@ def search_incomes(request):
 @login_required(login_url='authentication/login')
 
 def index(request):
+
+    if not UserPreferences.objects.filter(user=request.user).exists():
+        messages.info(request, 'Please choose your preferred currency')
+        return redirect('preferences')
+
     income = Income.objects.filter(user=request.user)
     paginator = Paginator(income, 5)
     page_number = request.GET.get('page')
@@ -48,6 +53,11 @@ def index(request):
     return render(request, 'incomes/index.html', context)
 
 def add_incomes(request):
+
+    if not UserPreferences.objects.filter(user=request.user).exists():
+        messages.info(request, 'Please choose your preferred currency')
+        return redirect('preferences')
+
     source = Source.objects.all()
     context = {
         'source': source,
@@ -129,6 +139,7 @@ def income_summary(request):
     if not UserPreferences.objects.filter(user=request.user).exists():
         messages.info(request, 'Please choose your preferred currency')
         return redirect('preferences')
+        
     all_income = Income.objects.all()
     today = datetime.datetime.today().date()
     today2 = datetime.date.today()

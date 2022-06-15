@@ -36,6 +36,11 @@ def search_expenses(request):
 @login_required(login_url='authentication/login')
 
 def index(request):
+
+    if not UserPreferences.objects.filter(user=request.user).exists():
+        messages.info(request, 'Please choose your preferred currency')
+        return redirect('preferences')
+
     expense = Expense.objects.filter(user=request.user)
     paginator = Paginator(expense, 5)
     page_number = request.GET.get('page')
@@ -53,6 +58,11 @@ def index(request):
 @login_required(login_url='/authentication/login')
 
 def add_expenses(request):
+
+    if not UserPreferences.objects.filter(user=request.user).exists():
+        messages.info(request, 'Please choose your preferred currency')
+        return redirect('preferences')
+        
     categories = Category.objects.all()
     context = {
         'categories': categories,
