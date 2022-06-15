@@ -44,18 +44,14 @@
                         <label class="form-check-label" for="showPassword">Show Password</label>
                     </div>
 
-                    <div class="d-grid gap-2">
+                    <div class="d-grid gap-2 mb-2">
                         <input type="submit" value="Register" class="btn btn-primary submit-btn" disabled="disabled">
                     </div>
 
                 </form>
-
-                <div class="container">
                 
-                    <span class="text-lead lead">Have an account?</span> <a href="{% url 'login' %}">Login</a><br>
-                    <span class="text-lead lead">Forgot your password?</span> <a href="{% url 'reset-password' %}">Reset</a>
-    
-                </div>
+                    <span>Have an account?</span> <a href="{% url 'login' %}">Login</a><br>
+                    <span>Forgot your password?</span> <a href="{% url 'reset-password' %}">Reset</a>
 
             </div>
         </div>
