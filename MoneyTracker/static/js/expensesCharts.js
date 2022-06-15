@@ -1,5 +1,5 @@
 let ctx = document.getElementById("myChart").getContext("2d");
-let loader = document.querySelector("#loading-stuff");
+let loader = document.querySelector("#loading-stuff")
 
 const getData = async () => {
   const data = await (await fetch("/expenses/summary_rest")).json();
