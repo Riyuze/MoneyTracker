@@ -1,5 +1,5 @@
 # MoneyTracker (ManeTorakka)
 
-manetorakka.herokuapp.com
+https://manetorakka.herokuapp.com
 
 A simple website to track your money.
