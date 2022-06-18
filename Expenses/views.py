@@ -99,8 +99,7 @@ def edit_expenses(request, id):
     categories = Category.objects.all()
     context = {
         'expense': expense,
-        'values': expense,
-        'category': categories,
+        'categories': categories,
     }
 
     if request.method == 'GET':

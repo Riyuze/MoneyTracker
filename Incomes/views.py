@@ -1,3 +1,5 @@
+from importlib.machinery import SOURCE_SUFFIXES
+from importlib.util import source_hash
 from django.http import JsonResponse, HttpResponse
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
@@ -58,9 +60,9 @@ def add_incomes(request):
         messages.info(request, 'Please choose your preferred currency')
         return redirect('preferences')
 
-    source = Source.objects.all()
+    sources = Source.objects.all()
     context = {
-        'source': source,
+        'sources': sources,
         'values': request.POST
     }
 
@@ -89,11 +91,10 @@ def add_incomes(request):
 
 def edit_incomes(request, id):
     income = Income.objects.get(pk=id)
-    source = Source.objects.all()
+    sources = Source.objects.all()
     context = {
         'income': income,
-        'values': income,
-        'source': source,
+        'sources': sources,
     }
 
     if request.method == 'GET':
