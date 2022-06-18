@@ -25,9 +25,6 @@ from dotenv import load_dotenv
 # Library for django messages
 from django.contrib import messages
 
-# Library for random secret key
-from django.core.management.utils import get_random_secret_key
-
 # Loads the env files
 load_dotenv()
 
@@ -39,7 +36,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.environ.get('SECRET_KEY', get_random_secret_key())
+SECRET_KEY = os.environ.get('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get('DEBUG', 'False') == 'True'
