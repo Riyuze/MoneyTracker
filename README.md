@@ -1,6 +1,6 @@
 # MoneyTracker (ManeTorakka)
 
-A simple web app to track your money, built using **Django** framework and is deployed on **Heroku**. Aesthetics of the web app was made using **Bootstrap**. You can read more about these on:
+A simple web app to track your money, built using **Django** framework and was deployed on **Heroku**. Aesthetics of the web app was made using **Bootstrap**. You can read more about these on:
 
 Django: https://www.djangoproject.com/
 
